@@ -1,0 +1,69 @@
+const mongoose =  require("mongoose");
+const conexion=  "mongodb+srv://veronicaquijije:<VeronicaQuijije99>@cluster0.uyinf.mongodb.net/?retryWrites=true&w=majority";
+
+(async ()=>{
+    //conectamos a la bd
+    const conectado =  await mongoose.connect(conexion);
+    //Definir los models
+    const Asignatura = mongoose.model("Asignatura", {
+        nombre:String,
+    });
+    const Carrera = mongoose.model ("Carrera", {nombre:String});    
+    const Periodo = mongoose.model ("Periodo", {nombre:String});    
+    const Paralelo = mongoose.model ("Paralelo", {nombre:String} )
+    const Estudiante =  mongoose.model("Estudiante", 
+    {
+         nombre: String,
+          idperiodo: { type: mongoose.Schema.Types.ObjectId, ref:"Periodo"},
+          idasignatura: { type: mongoose.Schema.Types.ObjectId, ref:"Asignatura" },
+          idparalelo: { type: mongoose.Schema.Types.ObjectId, ref:"Paralelo" },
+          carreras: [
+              {
+                  carrera:{type: mongoose.Schema.Types.ObjectId, ref:"Carrera" },
+                  estado: {type:Boolean}
+                   
+              }
+            ],
+          
+    });
+    //Instancias de los modelos
+    const asignatura1 =  new Asignatura({nombre:"Fisica"});
+    const carrera1 = new Carrera({nombre:"Ingieneria de TI"});
+    const carrera2 = new Carrera({nombre:"Ingieneria en sistemas"});
+    const periodo1 = new Periodo({nombre:"2022-1"});
+    const periodo2 = new Periodo({nombre:"2022-2"});
+    const paralelo1 = new Paralelo({nombre: "A"});
+    const paralelo2 = new Paralelo({nombre: "B"});
+
+    //Almacenamiento
+    const asignaturaAlmacenada =  await asignatura1.save();
+    const carrera1Almacenada =  await carrera1.save();
+    const carrera2Almacenada =  await carrera2.save();
+    const periodo1almacenado = await periodo1.save();
+    const periodo2almacenado = await periodo2.save();
+    const paralelo1almacenado = await paralelo1.save();
+    const paralelo2almacenado = await paralelo2.save();
+    
+    //instancia de Estudiante
+    const estudiante1=  new Estudiante(
+        { nombre:"Carlos",
+         idperiodo: periodo1almacenado._id,   
+         idasignatura: asignaturaAlmacenada._id,
+         idparalelo: paralelo1almacenado._id,
+         carreras:[
+             {carrera: carrera1Almacenada._id , estado:true},
+             {carrera: carrera2Almacenada._id , estado:false}
+         ]
+        })
+        //proocedemos almacenar estudiante
+    const estudiantealmacenado = await estudiante1.save();
+    //consultar la información de estudiante
+    const resultado= await Estudiante.find()
+    .populate("idperiodo")
+    .populate("idasignatura")
+    .populate("idparalelo")
+    .populate("carreras.carrera");
+    //mostrar datos de usuario específico
+    console.log(resultado[0].carreras)
+
+})()
