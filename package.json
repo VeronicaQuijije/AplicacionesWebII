@@ -1,7 +1,6 @@
 {
   "name": "practicas-en-clases",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +13,15 @@
     "i": "^0.3.7",
     "mongodb": "^4.6.0",
     "mongose": "^0.0.2-security"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VeronicaQuijije/Aplicaciones-Web-II.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VeronicaQuijije/Aplicaciones-Web-II/issues"
+  },
+  "homepage": "https://github.com/VeronicaQuijije/Aplicaciones-Web-II#readme",
+  "description": ""
 }

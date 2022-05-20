@@ -1,3 +1,4 @@
+//Arreglos con funcion
 const comidas =[
     "Encebollado",
     "Bolon mixto",
