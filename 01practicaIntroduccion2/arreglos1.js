@@ -1,3 +1,4 @@
+//const 
 const animales=[
     "perro",
     "gato",
